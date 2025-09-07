@@ -40,45 +40,41 @@ export default class Tree {
   }
 
   remove(root, value) {
-    // first case where the node to delete is a leaf node with no children
-    if (root.left === null && root.right === null && root.data === value) {
-      return null;
-    }
+    if (root === null) return root;
 
-    // second case where the node to remove has a single child
-    if (root.data === value && root.right !== null && root.left === null) {
-      return root.right;
-    }
-
-    if (root.data === value && root.left !== null && root.right === null) {
-      return root.left;
-    }
-
-    if (root.data === value && root.right !== null && root.left !== null) {
-      let successor = this.#getSuccessor(root);
-
-      root.data = successor.data;
-
-      root.right = this.remove(root.right, successor.data);
-
-      return root;
-    }
-
-    if (value < root.data) {
-      root.left = this.remove(root.left, value);
-    } else if (value > root.data) {
+    if (value > root.data) {
       root.right = this.remove(root.right, value);
-    }
+    } else if (value < root.data) {
+      root.left = this.remove(root.left, value);
+    } else {
+      // If root has matches the value
 
+      // root has 0 children, or only right child
+      if (root.left === null) return root.right;
+
+      // root has only left child
+      if (root.right === null) return root.left;
+
+      // root has both child
+      let successor = this.#getSuccessor(root);
+      root.data = successor.data;
+      root.right = this.remove(root.right, successor.data);
+    }
     return root;
   }
 
-  #getSuccessor(node) {
-    node = node.right;
-    while (node !== null && node.left !== null) {
-      node = node.left;
+  find(node, value) {
+    if (node === null) return null;
+
+    if (node.data === value) return node;
+
+    if (value > node.data) {
+      return this.find(node.right, value);
+    } else if (value < node.data) {
+      return this.find(node.left, value);
     }
-    return node;
+
+    return null;
   }
 
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
@@ -96,6 +92,14 @@ export default class Tree {
     if (node.left !== null) {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
+  }
+
+  #getSuccessor(node) {
+    node = node.right;
+    while (node !== null && node.left !== null) {
+      node = node.left;
+    }
+    return node;
   }
 
   #buildTreeRec(arr, start, end) {
