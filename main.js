@@ -14,3 +14,9 @@ test.prettyPrint();
 test.levelOrderForEach((node) => {
   console.log(node.data);
 });
+
+test.prettyPrint();
+
+test.inOrderForEach((node) => {
+  console.log(node.data);
+}, test.root);

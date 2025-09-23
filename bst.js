@@ -79,9 +79,9 @@ export default class Tree {
 
   levelOrderForEach(callback) {
     if (!callback) {
-      throw new Error("Callback is required");
+      throw new Error("Callback is required!");
     }
-    
+
     if (this.root === null) return;
     let queue = new Array();
     // Start of the queue
@@ -95,6 +95,37 @@ export default class Tree {
       if (current.right !== null) queue.push(current.right);
       queue.shift(); // Removes the front
     }
+  }
+
+  inOrderForEach(callback, node = this.root) {
+    //* This check could be moved outside but who cares
+    if (!callback) {
+      throw new Error("Callback is required!");
+    }
+    if (node === null) return;
+    this.inOrderForEach(callback, node.left);
+    callback(node);
+    this.inOrderForEach(callback, node.right);
+  }
+
+  preOrderForEach(callback, node = this.root) {
+    if (!callback) {
+      throw new Error("Callback is required!");
+    }
+    if (node === null) return;
+    callback(node);
+    this.preOrderForEach(callback, node.left);
+    this.preOrderForEach(callback, node.right);
+  }
+
+  postOrderForEach(callback, node = this.root) {
+    if (!callback) {
+      throw new Error("Callback is required!");
+    }
+    if (node === null) return;
+    this.postOrderForEach(callback, node.left);
+    this.postOrderForEach(callback, node.right);
+    callback(node);
   }
 
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
