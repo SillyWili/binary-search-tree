@@ -10,3 +10,7 @@ test.remove(root, 67);
 test.prettyPrint();
 test.remove(root, 3);
 test.prettyPrint();
+
+test.levelOrderForEach((node) => {
+  console.log(node.data);
+});

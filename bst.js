@@ -77,6 +77,26 @@ export default class Tree {
     return null;
   }
 
+  levelOrderForEach(callback) {
+    if (!callback) {
+      throw new Error("Callback is required");
+    }
+    
+    if (this.root === null) return;
+    let queue = new Array();
+    // Start of the queue
+    queue.push(this.root);
+    while (queue.length >= 1) {
+      let current = queue[0];
+      // Process the current node
+      callback(current);
+      // Queue the other nodes
+      if (current.left !== null) queue.push(current.left);
+      if (current.right !== null) queue.push(current.right);
+      queue.shift(); // Removes the front
+    }
+  }
+
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
