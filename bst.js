@@ -128,6 +128,24 @@ export default class Tree {
     callback(node);
   }
 
+  height(value, node = this.root) {
+    if (node === null) return null;
+    if (node.data === value) {
+      let left = this.#getHeightFromValue(node.left);
+      let right = this.#getHeightFromValue(node.right);
+      if (left > right) {
+        return left + 1;
+      } else {
+        return right + 1;
+      }
+    }
+    let leftResult = this.height(value, node.left);
+    if (leftResult !== null) return leftResult;
+
+    let rightResult = this.height(value, node.right);
+    return rightResult;
+  }
+
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
@@ -142,6 +160,20 @@ export default class Tree {
     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
     if (node.left !== null) {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+  }
+
+  #getHeightFromValue(node) {
+    if (node === null) {
+      return 0;
+    }
+    let left = this.#getHeightFromValue(node.left);
+    let right = this.#getHeightFromValue(node.right);
+    if (left === 0 && right === 0) return 0;
+    if (left > right) {
+      return left + 1;
+    } else {
+      return right + 1;
     }
   }
 

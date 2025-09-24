@@ -20,3 +20,6 @@ test.prettyPrint();
 test.inOrderForEach((node) => {
   console.log(node.data);
 }, test.root);
+
+test.prettyPrint();
+console.log(test.height(9, test.root));
