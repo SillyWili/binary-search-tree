@@ -146,6 +146,17 @@ export default class Tree {
     return rightResult;
   }
 
+  depth(value, node = this.root, count = 0) {
+    if (node === null) return null;
+    if (node.data === value) return count;
+
+    let leftResult = this.depth(value, node.left, count + 1);
+    if (leftResult !== null) return leftResult;
+
+    let rightResult = this.depth(value, node.right, count + 1);
+    return rightResult;
+  }
+
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
