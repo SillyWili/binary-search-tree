@@ -169,6 +169,16 @@ export default class Tree {
     return false;
   }
 
+  rebalance() {
+    let values = [];
+
+    this.inOrderForEach((node) => {
+      values.push(node.data);
+    });
+
+    this.root = this.buildTree(values);
+  }
+
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
