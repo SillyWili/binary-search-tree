@@ -1,30 +1,82 @@
 import Tree from "./bst.js";
 
-const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const test = new Tree(arr);
+function createRandomArray(max, min, n = 1) {
+  return Array.from(
+    { length: n },
+    () => Math.floor(Math.random() * (max - min + 1)) + min
+  );
+}
+
+const testArr = createRandomArray(100, 0, 14);
+
+const test = new Tree(testArr);
 const root = test.root;
 
-test.prettyPrint();
-test.insert(root, 2);
-test.remove(root, 67);
-test.prettyPrint();
-test.remove(root, 3);
+console.log(test.isBalanced(root)); // True
+
+// console.log("");
+
+// test.levelOrderForEach((node) => {
+//   console.log(`${node.data} =>`);
+// });
+
+// console.log("");
+
+// test.inOrderForEach((node) => {
+//   console.log(`${node.data} =>`);
+// });
+
+// console.log("");
+
+// test.postOrderForEach((node) => {
+//   console.log(`${node.data} =>`);
+// });
+
+// console.log("");
+
+// test.preOrderForEach((node) => {
+//   console.log(`${node.data} =>`);
+// });
+
+// console.log("");
+
+test.insert(root, 151);
+test.insert(root, 152);
+test.insert(root, 153);
+test.insert(root, 154);
+test.insert(root, 155);
+test.insert(root, 156);
 test.prettyPrint();
 
+console.log("Is the tree balanced? ", test.isBalanced()); // False
+test.rebalance();
+console.log("Is the tree balanced? ", test.isBalanced()); // True
+console.log("");
+
+test.prettyPrint();
+
+console.log("Level order traversal");
 test.levelOrderForEach((node) => {
-  console.log(node.data);
+  console.log(`${node.data} =>`);
 });
 
-test.prettyPrint();
+console.log("");
 
+console.log("In-Order traversal");
 test.inOrderForEach((node) => {
-  console.log(node.data);
-}, test.root);
+  console.log(`${node.data} =>`);
+});
 
-test.prettyPrint();
-console.log(test.height(9, test.root));
+console.log("");
 
-test.prettyPrint();
-console.log(test.depth(23, test.root));
+console.log("Post-Order traversal");
+test.postOrderForEach((node) => {
+  console.log(`${node.data} =>`);
+});
 
-console.log(test.isBalanced(test.root));
+console.log("");
+
+console.log("Pre-Order traversal");
+test.preOrderForEach((node) => {
+  console.log(`${node.data} =>`);
+});
