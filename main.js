@@ -27,3 +27,4 @@ console.log(test.height(9, test.root));
 test.prettyPrint();
 console.log(test.depth(23, test.root));
 
+console.log(test.isBalanced(test.root));

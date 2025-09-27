@@ -157,6 +157,18 @@ export default class Tree {
     return rightResult;
   }
 
+  isBalanced(node = this.root) {
+    if (node === null) return true;
+
+    if (this.#isNodeBalanced(node)) {
+      if (this.isBalanced(node.left) && this.isBalanced(node.right)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
@@ -172,6 +184,15 @@ export default class Tree {
     if (node.left !== null) {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
+  }
+
+  #isNodeBalanced(node) {
+    if (node === null) return true;
+
+    let left = this.#getHeightFromValue(node.left);
+    let right = this.#getHeightFromValue(node.right);
+
+    return Math.abs(left - right) <= 1;
   }
 
   #getHeightFromValue(node) {
