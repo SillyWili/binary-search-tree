@@ -211,7 +211,6 @@ export default class Tree {
     }
     let left = this.#getHeightFromValue(node.left);
     let right = this.#getHeightFromValue(node.right);
-    if (left === 0 && right === 0) return 0;
     if (left > right) {
       return left + 1;
     } else {
